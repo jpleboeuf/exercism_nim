@@ -1,1 +1,1 @@
-"# exercism_nim" 
+# exercism_nim
