@@ -1,2 +1,7 @@
+proc `%%`(a: int, b: int): bool {.inline.} =
+  a mod b == 0
+proc `!%`(a: int, b: int): bool {.inline.} =
+  not (a %% b)
+
 proc isLeapYear*(y: int): bool {.inline.} =
-  (y mod 4 == 0) and (y mod 100 != 0 or y mod 400 == 0)
+  (y %% 4) and ((y !% 100) or (y %% 400))
