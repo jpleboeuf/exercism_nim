@@ -8,7 +8,8 @@ proc isIsogram*(s: string): bool {.inline.} =
   for c in s:
     if isAlphaAscii(c):
       var l = toLowerAscii(c)
-      inc(alphagram[alphaPos(l)])
-      if alphagram[alphaPos(l)] > 1:
+      var lap = alphaPos(l)
+      inc(alphagram[lap])
+      if alphagram[lap] > 1:
         return false
   return true
