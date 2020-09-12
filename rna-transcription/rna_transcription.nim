@@ -1,4 +1,7 @@
 import tables
+import sugar
+from sequtils import map
+from strutils import join
 
 const
   nucleotideTransTbl = {
@@ -9,7 +12,4 @@ const
     }.toTable
 
 proc toRna*(dna: string): string =
-  var rna = ""
-  for n in dna:
-    rna &= nucleotideTransTbl[n]
-  rna
+  join(dna.map(n => nucleotideTransTbl[n]))
