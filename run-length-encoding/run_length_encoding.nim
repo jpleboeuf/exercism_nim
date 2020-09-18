@@ -24,23 +24,23 @@ proc decode*(str: string): string =
   var decStr = ""
   type
     CurRepeat = object
-      slice: array[2, int]
+      slice: Slice[int]
       value: int  # Numerical value of the repeat - late evaluation!
   var curRepeat: CurRepeat
   proc initCurRepeat =
-    curRepeat = CurRepeat(slice: [-1, -1], value: -1)
+    curRepeat = CurRepeat(slice: (-1)..(-1), value: -1)
   initCurRepeat()
   for i, c in str:
     if not isDigit(c):
-      if curRepeat.slice[0] == -1:
-        decStr &= c
+      if curRepeat.slice.a == -1:
+        curRepeat.value = 1
       else:
-        curRepeat.value = str[curRepeat.slice[0]..curRepeat.slice[1]].parseInt()
-        decStr &= c.repeat(curRepeat.value)
-        initCurRepeat()
+        curRepeat.value = str[curRepeat.slice].parseInt()
+      decStr &= c.repeat(curRepeat.value)
+      initCurRepeat()
     else:
-      if curRepeat.slice[0] == -1:
-        curRepeat.slice = [i, i]
+      if curRepeat.slice.a == -1:
+        curRepeat.slice = i..i
       else:
-        curRepeat.slice[1] = i
+        curRepeat.slice.b = i
   decStr
