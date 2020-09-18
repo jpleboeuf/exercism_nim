@@ -1,46 +1,32 @@
-import strutils
+import strutils, parseutils
 
 proc encode*(str: string): string =
   var encStr = ""
-  var buf = ""
-  proc emptyBuf =
-    if buf.len > 1:
-      encStr &= $buf.len
-    encStr &= buf[0]
-    buf = ""    
+  var skip = 0
   for i, c in str:
-    if buf.len == 0:
-      buf &= c
-    elif buf[0] == c:
-      buf &= c
-    else:
-      emptyBuf()
-      buf &= c
-    if i == str.len-1:
-      emptyBuf()
+    if i < skip:
+      continue     # Nah, I don't want to use a ``while`` :)
+    let count = str.skipWhile({c}, start = i)
+    if count > 1:
+      encStr &= $count
+    encStr &= $c
+    skip += count  # It would be awesome to have the iterator ``skip(count)``.
   encStr
 
 proc decode*(str: string): string =
   var decStr = ""
-  type
-    CurRepeat = object
-      slice: Slice[int]
-      value: int  # Numerical value of the repeat - late evaluation!
-  var curRepeat: CurRepeat
-  proc initCurRepeat =
-    curRepeat = CurRepeat(slice: (-1)..(-1), value: -1)
-  initCurRepeat()
-  for i, c in str:
-    if not isDigit(c):
-      if curRepeat.slice.a == -1:
-        curRepeat.value = 1
-      else:
-        curRepeat.value = str[curRepeat.slice].parseInt()
-      decStr &= c.repeat(curRepeat.value)
-      initCurRepeat()
+  var count = -1
+  for (token, isNum) in str.tokenize(Digits):
+    if isNum:
+      count = token.parseInt()
     else:
-      if curRepeat.slice.a == -1:
-        curRepeat.slice = i..i
+      if count == -1:
+        decStr &= token
       else:
-        curRepeat.slice.b = i
+        # When the previous token is a number,
+        #  ``token[0]`` contains the first char after the number
+        decStr &= token[0].repeat(count)
+        #  and ``token[1..^1]`` contains the other chars.
+        decStr &= token[1..^1]
+        count = -1
   decStr
