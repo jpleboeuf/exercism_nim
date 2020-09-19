@@ -1,9 +1,7 @@
-import strutils, math
+from math import `^`, sum
+from sequtils import mapIt
 
-proc isArmstrongNumber*(nbr: int): bool =
+proc isArmstrongNumber*(nbr: int): bool {.inline.} =
   let nbrStr: string = $nbr
   let nbrDigits: int = len(nbrStr)
-  var sum: int = 0
-  for d in nbrStr:
-    sum += ($d).parseInt() ^ nbrDigits
-  sum == nbr
+  sum(nbrStr.mapIt((ord(it) - ord('0')) ^ nbrDigits)) == nbr
