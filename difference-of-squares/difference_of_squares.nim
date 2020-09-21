@@ -1,20 +1,17 @@
+from math import `^`, sum
+from sequtils import toSeq, mapIt
+
 template raiseValueError(): untyped =
   raise newException(ValueError, "n has to be a natural number")
 
-proc squareOfSum*(n: uint): uint =
+func squareOfSum*(n: uint): uint =
   if n < 1: raiseValueError
-  var sum: uint = 0
-  for i in countup(uint(1), n):
-      sum += i
-  sum * sum
+  (sum toSeq(uint(1)..n)) ^ uint(2)
 
-proc sumOfSquares*(n: uint): uint =
+func sumOfSquares*(n: uint): uint =
   if n < 1: raiseValueError
-  var sum: uint = 0
-  for i in countup(uint(1), n):
-    sum += i * i
-  sum
+  sum toSeq(uint(1)..n).mapIt(it ^ uint(2))
 
-proc difference*(n: uint): uint =
+func difference*(n: uint): uint =
   if n < 1: raiseValueError
   squareOfSum(n) - sumOfSquares(n)
