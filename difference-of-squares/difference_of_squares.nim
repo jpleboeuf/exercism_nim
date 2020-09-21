@@ -1,6 +1,8 @@
+var ve = newException(ValueError, "n has to be a natural number")
+
 proc squareOfSum*(n: uint): uint =
   if n < 1:
-    raise newException(ValueError, "n natural number")
+    raise ve
   var sum: uint = 0
   for i in countup(uint(1), n):
       sum += i
@@ -8,7 +10,7 @@ proc squareOfSum*(n: uint): uint =
 
 proc sumOfSquares*(n: uint): uint =
   if n < 1:
-    raise newException(ValueError, "n natural number")
+    raise ve
   var sum: uint = 0
   for i in countup(uint(1), n):
     sum += i * i
@@ -16,5 +18,5 @@ proc sumOfSquares*(n: uint): uint =
 
 proc difference*(n: uint): uint =
   if n < 1:
-    raise newException(ValueError, "n natural number")
+    raise ve
   squareOfSum(n) - sumOfSquares(n)
