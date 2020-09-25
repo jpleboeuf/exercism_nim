@@ -17,7 +17,7 @@ proc toAllergens(v: int): Allergens = cast[Allergens](v)
 proc toNum(a: Allergens): int = cast[int](a)
 proc toAllergenLst(a: Allergens): seq[string] = a.mapIt($it)
 
-proc lst*(allergies: Allergies): seq[string] =
+proc lst*(allergies: Allergies): seq[string] {.inline.} =
   toAllergenLst(toAllergens(allergies.score))
 
 proc isAllergicTo*(allergies: Allergies, allergen: string): bool {.inline.} =
