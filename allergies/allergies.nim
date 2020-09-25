@@ -3,7 +3,7 @@ from sequtils import mapit
 type
   Allergies* = object
     score*: int
-  Allergen {.size: sizeof(cint).} = enum
+  Allergen = enum
     eggs         # (  1)
     peanuts      # (  2)
     shellfish    # (  4)
@@ -14,7 +14,7 @@ type
     cats         # (128)
   Allergens = set[Allergen]
 proc toAllergens(v: int): Allergens = cast[Allergens](v)
-proc toNum(a: Allergens): int = cast[cint](a)
+proc toNum(a: Allergens): int = cast[int](a)
 proc toAllergenLst(a: Allergens): seq[string] = a.mapIt($it)
 
 proc lst*(allergies: Allergies): seq[string] =
