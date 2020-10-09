@@ -1,24 +1,20 @@
 import strutils
+from std/wordwrap import wrapWords
 
 const aOrd = ord('a')
 const zOrd = ord('z')
 
 proc encode*(str: string): string =
   var encStr = ""
-  var gl = 0
   for c in str:
     if c.isAlphaAscii:
       encStr &= chr(zOrd - (ord(c.toLowerAscii) - aOrd))
     elif c.isDigit:
       encStr &= c
     else:
-      continue
-    inc(gl)
-    if gl mod 5 == 0:
-      encStr &= ' '
-      gl = 0
-  encStr.strip
-    
+      continue    
+  wrapWords(encStr.strip, maxLineWidth = 5, newLine = $' ')
+
 proc decode*(str: string): string =
   var decStr = ""
   for c in str:
