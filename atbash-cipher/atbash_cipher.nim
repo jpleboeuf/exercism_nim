@@ -4,24 +4,17 @@ from std/wordwrap import wrapWords
 const aOrd = ord('a')
 const zOrd = ord('z')
 
-proc encode*(str: string): string =
-  var encStr = ""
+proc transform(str: string): string =
   for c in str:
     if c.isAlphaAscii:
-      encStr &= chr(zOrd - (ord(c.toLowerAscii) - aOrd))
+      result &= chr(zOrd - (ord(c.toLowerAscii) - aOrd))
     elif c.isDigit:
-      encStr &= c
-    else:
-      continue    
-  wrapWords(encStr.strip, maxLineWidth = 5, newLine = $' ')
-
-proc decode*(str: string): string =
-  var decStr = ""
-  for c in str:
-    if c.isAlphaAscii:
-      decStr &= chr(aOrd + (zOrd - ord(c.toLowerAscii)))
-    elif c.isDigit():
-      decStr &= c
+      result &= c
     else:
       continue
-  decStr
+
+proc encode*(str: string): string =
+  wrapWords(transform(str), maxLineWidth = 5, newLine = $' ')
+
+proc decode*(str: string): string =
+  transform(str)
