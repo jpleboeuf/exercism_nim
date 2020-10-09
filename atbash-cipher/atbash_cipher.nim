@@ -14,10 +14,7 @@ const transformMap = block:
     reverseLowerAlphaChars = reversed(lowerAlphaChars)
     reverseAlphaChars = reverseLowerAlphaChars & reverseLowerAlphaChars
     toChars = reverseAlphaChars & digitChars
-  var transformMap = initTable[char, char]()
-  for pair in zip(fromChars, toChars):
-    let (fromChar, toChar) = pair
-    transformMap[fromChar] = toChar
+  let transformMap = zip(fromChars, toChars).toTable
   transformMap
 
 proc transform(str: string): string =
