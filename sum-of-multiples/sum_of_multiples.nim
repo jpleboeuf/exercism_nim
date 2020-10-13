@@ -2,7 +2,7 @@ from math import sum
 from sequtils import toSeq, filterIt, any
 
 template raiseValueError(): untyped =
-  raise newException(ValueError, "n has to be a natural number")
+  raise newException(ValueError, "n has to be a natural number (0 tolerated)")
 
 template `%%`(a: int, b: int): bool =
   a mod b == 0
