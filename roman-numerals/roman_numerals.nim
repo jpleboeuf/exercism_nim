@@ -13,7 +13,7 @@ proc roman*(n: int): string =
   let n_len = len($n)
   for i, nc in $n:
     var nd = parseInt($nc)             # n'digit
-    var nd_val = 10 ^ (n_len - (i+1))  # n'value in base 10
+    var nd_val = 10 ^ (n_len - (i+1))  # n'digit's value in base 10
     result &= (
       case nd:
         of 0:
