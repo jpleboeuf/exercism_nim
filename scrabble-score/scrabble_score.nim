@@ -3,10 +3,6 @@ from strutils import toUpperAscii
 from math import sum
 
 const lv = block:
-  type
-    LetterValue = object
-      letter: char
-      value: uint
   const letterValues = @[
       (@"AEIOU" &
        @"LNRST",   1),
@@ -17,13 +13,10 @@ const lv = block:
       (@"JX",      8),
       (@"QZ",     10),
     ]
-  let lvLst = letterValues.map(
-      lvd => (
-          lvd[0].mapIt(LetterValue(letter: it, value: lvd[1].uint))
-        )
-    ).concat()
-  collect(initTable(lvLst.len)):
-    for i, lv in lvLst: {lv.letter: lv.value}
+  collect(initTable(26)):
+    for i, lv in letterValues:
+      for l in lv[0]:
+        {l: lv[1].uint}
 
 func score*(str: string): uint =
   sum str.toUpperAscii().mapIt(lv[it])
