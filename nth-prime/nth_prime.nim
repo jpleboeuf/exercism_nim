@@ -1,7 +1,7 @@
 template raiseValueError(): untyped =
   raise newException(ValueError, "n has to be a strictly positive natural number (i.e. positive excluding 0)")
 
-func is_prime(n: uint): bool =
+func is_prime(n: uint64): bool =
   for d in 2 .. n-1:
     if n mod d == 0:
       return false
