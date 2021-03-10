@@ -1,13 +1,18 @@
+import tables
+
 template raiseValueError(): untyped =
   raise newException(ValueError, "n has to be a strictly positive natural number (i.e. positive excluding 0)")
 
-func is_prime(n: uint64): bool =
+proc is_prime(n: uint64): bool =
+  var primes {.global.} = initOrderedTable[uint64, bool]()
+  if n in primes:
+    return primes[n]
   for d in 2 .. n-1:
     if n mod d == 0:
-      return false
-  return true
+      return (primes[n] = false; primes[n])
+  return (primes[n] = true; primes[n])
 
-func prime*(n: uint): uint =
+proc prime*(n: uint): uint =
   if n == 0: raiseValueError
   var nbr: uint = 2
   var i: uint = 1
