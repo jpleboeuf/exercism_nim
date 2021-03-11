@@ -1,4 +1,5 @@
 import tables
+from math import sqrt
 
 template raiseValueError(): untyped =
   raise newException(ValueError, "n has to be a strictly positive natural number (i.e. positive excluding 0)")
@@ -7,7 +8,7 @@ proc is_prime(n: uint64): bool =
   var primes {.global.} = initOrderedTable[uint64, bool]()
   if n in primes:
     return primes[n]
-  for d in 2 .. n-1:
+  for d in 2 .. sqrt(n.float64).uint64:
     if n mod d == 0:
       return (primes[n] = false; primes[n])
   return (primes[n] = true; primes[n])
