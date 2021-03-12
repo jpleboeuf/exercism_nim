@@ -1,7 +1,12 @@
+import macros
 import tables
 
 template raiseValueError(): untyped =
   raise newException(ValueError, "n has to be a strictly positive natural number (i.e. positive excluding 0)")
+
+macro `:=`(name: untyped, value: untyped): untyped = 
+  quote do:
+    `name` = `value`; `value`
 
 proc is_prime(n: uint64): bool =
   var primes {.global.} = initOrderedTable[uint64, bool]()
@@ -11,8 +16,8 @@ proc is_prime(n: uint64): bool =
     if d * d > n:  # eq. 2 .. sqrt(n)
       break
     if n mod d == 0:
-      return (primes[n] = false; primes[n])
-  return (primes[n] = true; primes[n])
+      return primes[n] := false
+  return primes[n] := true
 
 proc prime*(n: uint): uint =
   if n == 0: raiseValueError
