@@ -9,6 +9,7 @@ macro `:=`(name: untyped, value: untyped): untyped =
     `name` = `value`; `value`
 
 proc is_prime(n: uint64): bool =
+  ## returns whether n is a prime or not
   var primes {.global.} = initOrderedTable[uint64, bool]()
   if n in primes:
     return primes[n]
@@ -20,10 +21,11 @@ proc is_prime(n: uint64): bool =
   return primes[n] := true
 
 proc prime*(n: uint): uint =
+  ## returns the n-th prime
   if n == 0: raiseValueError
-  var nbr: uint = 2
-  var i: uint = 1
-  var p_i: uint = nbr
+  var nbr: uint = 2    # number currently tested for primality
+  var i: uint = 1      # loop index (for the i-th prime)
+  var p_i: uint = nbr  # i-th prime
   while i < n:
     inc nbr
     if is_prime(nbr):
