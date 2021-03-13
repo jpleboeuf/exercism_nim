@@ -1,8 +1,8 @@
 import macros
 import tables
 
-template raiseValueError(): untyped =
-  raise newException(ValueError, "n has to be a strictly positive natural number (i.e. positive excluding 0)")
+template raiseValueError(err_msg: string): untyped =
+  raise newException(ValueError, err_msg)
 
 macro `:=`(name: untyped, value: untyped): untyped = 
   quote do:
@@ -22,7 +22,8 @@ proc is_prime(n: uint64): bool =
 
 proc prime*(n: uint): uint =
   ## returns the n-th prime
-  if n == 0: raiseValueError
+  if n == 0:
+    raiseValueError("n has to be a strictly positive natural number (i.e. positive excluding 0)")
   var nbr: uint = 2    # number currently tested for primality
   var i: uint = 1      # loop index (for the i-th prime)
   var p_i: uint = nbr  # i-th prime
