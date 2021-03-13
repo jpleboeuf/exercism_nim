@@ -6,7 +6,7 @@ template raiseValueError(): untyped =
 
 macro `:=`(name: untyped, value: untyped): untyped = 
   quote do:
-    `name` = `value`; `value`
+    `name` = `value`; `name`
 
 proc is_prime(n: uint64): bool =
   ## returns whether n is a prime or not
