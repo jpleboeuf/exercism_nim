@@ -36,7 +36,9 @@ proc prime*(n: uint): uint =
       p_i = nbr
   p_i
 
+
 when isMainModule:
+
   assert not is_prime(0)  # the zero is not a prime
   assert not is_prime(1)  # the unit is not a prime
   assert is_prime(2)
@@ -45,3 +47,6 @@ when isMainModule:
   assert is_prime(7)
   assert is_prime(11)
   assert is_prime(13)
+
+  assert prime(1) == 2  # the 1st prime is 2
+  assert prime(2) == 3  # the 2nd prime is 3
