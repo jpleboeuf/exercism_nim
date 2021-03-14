@@ -37,8 +37,8 @@ proc prime*(n: uint): uint =
   p_i
 
 when isMainModule:
-  assert not is_prime(0)
-  assert not is_prime(1)
+  assert not is_prime(0)  # the zero is not a prime
+  assert not is_prime(1)  # the unit is not a prime
   assert is_prime(2)
   assert is_prime(3)
   assert is_prime(5)
