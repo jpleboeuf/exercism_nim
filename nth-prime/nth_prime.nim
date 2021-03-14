@@ -13,6 +13,8 @@ proc is_prime(n: uint64): bool =
   var primes {.global.} = initOrderedTable[uint64, bool]()
   if n in primes:
     return primes[n]
+  if n == 0 or n == 1:
+    return primes[n] := false
   for d in 2 .. n:
     if d * d > n:  # eq. 2 .. sqrt(n)
       break
@@ -35,6 +37,8 @@ proc prime*(n: uint): uint =
   p_i
 
 when isMainModule:
+  assert not is_prime(0)
+  assert not is_prime(1)
   assert is_prime(2)
   assert is_prime(3)
   assert is_prime(5)
