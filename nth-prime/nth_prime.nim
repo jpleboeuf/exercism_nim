@@ -26,11 +26,15 @@ proc prime*(n: uint): uint =
   ## returns the n-th prime
   if n == 0:
     raiseValueError("n has to be a strictly positive natural number (i.e. positive excluding 0)")
-  var nbr: uint = 2    # number currently tested for primality
-  var i: uint = 1      # loop index (for the i-th prime)
+  if n == 1:
+    return 2
+  elif n == 2:
+    return 3
+  var nbr: uint = 3    # number currently tested for primality
+  var i: uint = 2      # loop index (for the i-th prime)
   var p_i: uint = nbr  # i-th prime
   while i < n:
-    inc nbr
+    inc(nbr, 2)  # 2 and 3 and the only 2 consecutive primes
     if is_prime(nbr):
       inc i
       p_i = nbr
