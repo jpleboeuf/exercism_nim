@@ -32,13 +32,12 @@ proc prime*(n: uint): uint =
     return 3
   var nbr: uint = 3    # number currently tested for primality
   var i: uint = 2      # loop index (for the i-th prime)
-  var p_i: uint = nbr  # i-th prime
+  result = nbr  # i-th prime
   while i < n:
     inc(nbr, 2)  # 2 and 3 and the only 2 consecutive primes
     if is_prime(nbr):
       inc i
-      p_i = nbr
-  p_i
+      result = nbr
 
 
 when isMainModule:
