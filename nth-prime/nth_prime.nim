@@ -10,17 +10,17 @@ macro `:=`(name: untyped, value: untyped): untyped =
 
 proc is_prime(n: uint64): bool =
   ## returns whether n is a prime or not
-  var primes {.global.} = initOrderedTable[uint64, bool]()
-  if n in primes:
-    return primes[n]
+  var nbr_primality {.global.} = initOrderedTable[uint64, bool]()
+  if n in nbr_primality:
+    return nbr_primality[n]
   if n == 0 or n == 1:
-    return primes[n] := false
+    return nbr_primality[n] := false
   for d in 2 .. n:
     if d * d > n:  # eq. 2 .. sqrt(n)
       break
     if n mod d == 0:
-      return primes[n] := false
-  return primes[n] := true
+      return nbr_primality[n] := false
+  return nbr_primality[n] := true
 
 iterator primes_first(n: uint): uint =
   ## yields the first n primes
