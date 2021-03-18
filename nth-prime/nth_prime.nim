@@ -25,11 +25,12 @@ proc is_prime(n: uint64): bool =
 iterator primes_first(n: uint): uint =
   ## yields the first n primes
   var primes:seq[uint] = @[2'u, 3'u]
-  if n >= 1:
-    yield primes[0]
-  if n >= 2:
-    yield primes[1]
-  var nbr: uint = primes[1]  # number currently tested for primality
+  var i:uint = 0
+  if n <= len(primes).uint:
+    while i < n:
+      yield primes[i]
+      inc i
+  var nbr: uint = primes[^1]  # number currently tested for primality
   while len(primes).uint < n:
     inc(nbr, 2)  # 2 and 3 and the only 2 consecutive primes
     if is_prime(nbr):
