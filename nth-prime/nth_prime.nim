@@ -22,22 +22,22 @@ proc is_prime(n: uint64): bool =
       return nbr_primality[n] := false
   return nbr_primality[n] := true
 
-iterator primes_first(n: uint): uint =
+iterator primes_first(n: uint64): uint64 =
   ## yields the first n primes
-  var primes:seq[uint] = @[2'u, 3'u]
-  var i:uint = 0
-  if n <= len(primes).uint:
+  var primes:seq[uint64] = @[2'u64, 3'u64]
+  var i:uint64 = 0
+  if n <= len(primes).uint64:
     while i < n:
       yield primes[i]
       inc i
-  var nbr: uint = primes[^1]  # number currently tested for primality
-  while len(primes).uint < n:
+  var nbr: uint64 = primes[^1]  # number currently tested for primality
+  while len(primes).uint64 < n:
     inc(nbr, 2)  # 2 and 3 and the only 2 consecutive primes
     if is_prime(nbr):
       primes.add(nbr)
       yield primes[^1]
 
-proc prime*(n: uint): uint =
+proc prime*(n: uint64): uint64 =
   ## returns the n-th prime
   if n == 0:
     raiseValueError("n has to be a strictly positive natural number (i.e. positive excluding 0)")
