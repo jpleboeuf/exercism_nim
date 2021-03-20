@@ -40,7 +40,7 @@ iterator primes_first(n: uint64): uint64 =
 proc prime*(n: uint64): uint64 =
   ## returns the n-th prime
   if n == 0:
-    raiseValueError("n has to be a strictly positive natural number (i.e. positive excluding 0)")
+    raiseValueError($n & " is not a strictly positive natural number (i.e. positive excluding 0)")
   for p in primes_first(n):
     result = p
 
@@ -56,5 +56,10 @@ when isMainModule:
   assert is_prime(11)
   assert is_prime(13)
 
+  try:
+    discard prime(0)
+  except:
+    assert getCurrentException() of ValueError
+    assert getCurrentExceptionMsg() == "0 is not a strictly positive natural number (i.e. positive excluding 0)"
   assert prime(1) == 2  # the 1st prime is 2
   assert prime(2) == 3  # the 2nd prime is 3
