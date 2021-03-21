@@ -59,7 +59,7 @@ when isMainModule:
   try:
     discard prime(0)
   except:
-    assert getCurrentException() of ValueError
-    assert getCurrentExceptionMsg() == "0 is not a strictly positive natural number (i.e. positive excluding 0)"
+    assert getCurrentException() of ValueError and
+      getCurrentExceptionMsg() == "0 is not a strictly positive natural number (i.e. positive excluding 0)"
   assert prime(1) == 2  # the 1st prime is 2
   assert prime(2) == 3  # the 2nd prime is 3
