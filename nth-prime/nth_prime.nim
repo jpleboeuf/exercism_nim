@@ -37,10 +37,12 @@ iterator primes_first(n: uint64): uint64 =
       primes.add(nbr)
       yield primes[^1]
 
+const IS_NOT_A_NTH: string = " is not a strictly positive natural number (i.e. positive excluding 0)"
+
 proc prime*(n: uint64): uint64 =
   ## returns the n-th prime
   if n == 0:
-    raiseValueError($n & " is not a strictly positive natural number (i.e. positive excluding 0)")
+    raiseValueError($n & IS_NOT_A_NTH)
   for p in primes_first(n):
     result = p
 
@@ -60,6 +62,6 @@ when isMainModule:
     discard prime(0)
   except:
     assert getCurrentException() of ValueError and
-      getCurrentExceptionMsg() == "0 is not a strictly positive natural number (i.e. positive excluding 0)"
+      getCurrentExceptionMsg() == "0" & IS_NOT_A_NTH
   assert prime(1) == 2  # the 1st prime is 2
   assert prime(2) == 3  # the 2nd prime is 3
