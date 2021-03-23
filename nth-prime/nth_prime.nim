@@ -15,6 +15,8 @@ proc is_prime(n: uint64): bool =
     return nbr_primality[n]
   if n == 0 or n == 1:
     return nbr_primality[n] := false
+  elif n == 2 or n == 3:
+    return nbr_primality[n] := true
   for d in 2 .. n:
     if d * d > n:  # eq. 2 .. sqrt(n)
       break
