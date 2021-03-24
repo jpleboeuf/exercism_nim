@@ -13,9 +13,9 @@ proc is_prime(n: uint64): bool =
   var nbr_primality {.global.} = initOrderedTable[uint64, bool]()
   if n in nbr_primality:
     return nbr_primality[n]
-  if n == 0 or n == 1:
+  if n in @[0'u64, 1'u64]:
     return nbr_primality[n] := false
-  elif n == 2 or n == 3:
+  elif n in @[2'u64, 3'u64]:
     return nbr_primality[n] := true
   for d in 2 .. n:
     if d * d > n:  # eq. 2 .. sqrt(n)
