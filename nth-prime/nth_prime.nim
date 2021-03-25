@@ -26,7 +26,7 @@ proc is_prime(n: uint64): bool =
 
 iterator primes_first(n: uint64): uint64 =
   ## yields the first n primes
-  var primes:seq[uint64] = @[2'u64, 3'u64]
+  var primes{.global.}:seq[uint64] = @[2'u64, 3'u64]
   var i:uint64 = 0
   if n <= len(primes).uint64:
     while i < n:
