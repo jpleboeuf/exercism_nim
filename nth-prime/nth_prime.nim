@@ -8,9 +8,12 @@ macro `:=`(name: untyped, value: untyped): untyped =
   quote do:
     `name` = `value`; `name`
 
+var
+  nbr_primality {.global.}: OrderedTable[uint64, bool] = initOrderedTable[uint64, bool]()
+  primes {.global.}: seq[uint64] = @[2'u64, 3'u64]
+
 proc is_prime(n: uint64): bool =
   ## returns whether n is a prime or not
-  var nbr_primality {.global.}: OrderedTable[uint64, bool] = initOrderedTable[uint64, bool]()
   if n in nbr_primality:
     return nbr_primality[n]
   if n in @[0'u64, 1'u64]:
@@ -26,7 +29,6 @@ proc is_prime(n: uint64): bool =
 
 iterator primes_first(n: uint64): uint64 =
   ## yields the first n primes
-  var primes {.global.}: seq[uint64] = @[2'u64, 3'u64]
   var i:uint64 = 0
   if n <= len(primes).uint64:
     while i < n:
