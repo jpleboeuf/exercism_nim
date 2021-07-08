@@ -1,35 +1,29 @@
-import macros
-import tables
-
 template raiseValueError(err_msg: string): untyped =
   raise newException(ValueError, err_msg)
 
-macro `:=`(name: untyped, value: untyped): untyped = 
-  quote do:
-    `name` = `value`; `name`
-
 var
-  nbr_primality {.global.}: OrderedTable[uint64, bool] = initOrderedTable[uint64, bool]()
   primes {.global.}: seq[uint64] = @[2'u64, 3'u64]
 
 proc is_prime(n: uint64): bool =
   ## returns whether n is a prime or not
-  if n in nbr_primality:
-    return nbr_primality[n]
-  if n in @[0'u64, 1'u64]:
-    return nbr_primality[n] := false
-  elif n in @[2'u64, 3'u64]:
-    return nbr_primality[n] := true
+  var furthest_nbr {.global.}: uint64 = primes[^1] + 1  # furthest number tested for primality
+  if n <= furthest_nbr:
+    if n in primes:
+      return true
+    else:
+      return false
   for d in 2 .. n:
     if d * d > n:  # eq. 2 .. sqrt(n)
       break
     if n mod d == 0:
-      return nbr_primality[n] := false
-  return nbr_primality[n] := true
+      furthest_nbr = n
+      return false
+  furthest_nbr = n + 1  # 2 and 3 and the only 2 consecutive primes
+  return true
 
 iterator primes_first(n: uint64): uint64 =
   ## yields the first n primes
-  var i:uint64 = 0
+  var i: uint64 = 0
   if n <= len(primes).uint64:
     while i < n:
       yield primes[i]
